@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anime.JS</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="anime.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="rectangle"></div>
+    </div>
+    <script>
+      const container = document.querySelector(".container");
+      function generarColorHex() {
+        const letras = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letras[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      for (let index = 0; index <= 50; index++) {
+        const rectangles = document.createElement("div");
+        rectangles.classList.add("rectangle");
+        rectangles.style.backgroundColor = generarColorHex();
+        container.appendChild(rectangles);
+      }
+
+      function animateRectangles() {
+        anime({
+          targets: ".rectangle",
+          translateX: function () {
+            return anime.random(-700, 700);
+          },
+          translateY: function () {
+            return anime.random(-500, 500);
+          },
+          rotate: 45,
+          scale: function () {
+            return anime.random(1, 5);
+          },
+          easing: "easeInOutBack",
+          duration: 5000,
+          delay: anime.stagger(10),
+          complete: animateRectangles,
+        });
+      }
+
+      animateRectangles();
+    </script>
+  </body>
+</html>
